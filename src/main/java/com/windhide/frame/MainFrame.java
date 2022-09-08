@@ -1,5 +1,6 @@
 package com.windhide.frame;
 
+import com.windhide.runnable.PlayRunnable;
 import com.windhide.util.StaticUtil;
 import com.windhide.util.TextMusicScoreUtil;
 
@@ -60,11 +61,18 @@ public class MainFrame {
 		playButton.addActionListener(e -> {
 			try {
 				String musicName = table.getValueAt(table.getSelectedRow(), 0) + ".txt";
-				StaticUtil.playThread.interrupt();
-				StaticUtil.playThread.setMusicName(musicName);
+				PlayRunnable playRunnable = null;
+				Thread playThread = null;
+				if (StaticUtil.playRunnable == null) {
+					playRunnable = new PlayRunnable();
+					StaticUtil.playRunnable = playRunnable;
+				}
+				StaticUtil.playRunnable.setMusicName(musicName);
+				playThread = new Thread(StaticUtil.playRunnable);
+				StaticUtil.playThread = playThread;
 				StaticUtil.playThread.start();
-
 			} catch (Exception exception) {
+				exception.printStackTrace();
 				JOptionPane.showMessageDialog(null, "请先选择歌曲", "错误", JOptionPane.WARNING_MESSAGE);
 			}
 		});

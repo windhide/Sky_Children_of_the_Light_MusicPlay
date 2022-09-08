@@ -1,6 +1,5 @@
 package com.windhide.frame;
 
-import com.windhide.util.PlayUtil;
 import com.windhide.util.StaticUtil;
 import com.windhide.util.TextMusicScoreUtil;
 
@@ -23,29 +22,10 @@ public class MainFrame {
 	private JTable table;
 	private JButton changeTapKey;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				new MainFrame();
-			}
-		};
-		runnable.run();
-	}
-
-	/**
-	 * Create the application.
-	 */
 	public MainFrame() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("").getPath() + "images/icon.jpg"));
@@ -77,15 +57,15 @@ public class MainFrame {
 		playButton = new JButton("播放");
 		playButton.setFont(new Font("宋体", Font.PLAIN, 17));
 		playButton.setBounds(565, 16, 218, 50);
-		playButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					String musicName = table.getValueAt(table.getSelectedRow(), 0) + ".txt";
-					PlayUtil.textMusicPlay(musicName, StaticUtil.keyTap);
-				} catch (Exception exception) {
-					JOptionPane.showMessageDialog(null, "请先选择歌曲", "错误", JOptionPane.WARNING_MESSAGE);
-				}
+		playButton.addActionListener(e -> {
+			try {
+				String musicName = table.getValueAt(table.getSelectedRow(), 0) + ".txt";
+				StaticUtil.playThread.interrupt();
+				StaticUtil.playThread.setMusicName(musicName);
+				StaticUtil.playThread.start();
+
+			} catch (Exception exception) {
+				JOptionPane.showMessageDialog(null, "请先选择歌曲", "错误", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		frame.getContentPane().add(playButton);
@@ -94,6 +74,7 @@ public class MainFrame {
 		stopButton.setFont(new Font("宋体", Font.PLAIN, 17));
 		stopButton.setBounds(565, 76, 218, 50);
 		frame.getContentPane().add(stopButton);
+		stopButton.addActionListener(e -> StaticUtil.playThread.stop());
 
 		changeTapKey = new JButton("改键位");
 		changeTapKey.addActionListener(new ActionListener() {

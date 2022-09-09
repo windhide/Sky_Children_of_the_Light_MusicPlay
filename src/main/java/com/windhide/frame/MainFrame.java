@@ -64,7 +64,7 @@ public class MainFrame {
 
 		playButton = new JButton("播放");
 		playButton.setFont(new Font("宋体", Font.PLAIN, 17));
-		playButton.setBounds(420, 54, 218, 50);
+		playButton.setBounds(420, 14, 218, 50);
 		playButton.addActionListener(e -> {
 			try {
 				String musicName = table.getValueAt(table.getSelectedRow(), 0) + ".txt";
@@ -78,7 +78,7 @@ public class MainFrame {
 
 		stopButton = new JButton("停止");
 		stopButton.setFont(new Font("宋体", Font.PLAIN, 17));
-		stopButton.setBounds(420, 188, 218, 50);
+		stopButton.setBounds(420, 148, 218, 50);
 		frame.getContentPane().add(stopButton);
 		stopButton.addActionListener(e -> StaticUtil.playThread.stop());
 
@@ -101,27 +101,18 @@ public class MainFrame {
 
 		PlayBar = new JProgressBar();
 		PlayBar.setValue(50);
-		PlayBar.setBounds(420, 164, 215, 14);
+		PlayBar.setBounds(420, 124, 215, 14);
 		frame.getContentPane().add(PlayBar);
 
 		playBarText = new JLabel("播放进度条");
 		playBarText.setHorizontalAlignment(SwingConstants.CENTER);
-		playBarText.setBounds(420, 114, 218, 15);
+		playBarText.setBounds(420, 74, 218, 15);
 		frame.getContentPane().add(playBarText);
 
 		playBarMusicName = new JLabel("正在放的歌曲");
 		playBarMusicName.setHorizontalAlignment(SwingConstants.CENTER);
-		playBarMusicName.setBounds(420, 139, 218, 15);
+		playBarMusicName.setBounds(420, 99, 218, 15);
 		frame.getContentPane().add(playBarMusicName);
-
-		comboMusicType = new JComboBox();
-		comboMusicType.setBounds(503, 14, 132, 28);
-		frame.getContentPane().add(comboMusicType);
-
-		musicTypeLabel = new JLabel("分类选择");
-		musicTypeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		musicTypeLabel.setBounds(420, 21, 73, 15);
-		frame.getContentPane().add(musicTypeLabel);
 
 		frame.setVisible(true);
 	}

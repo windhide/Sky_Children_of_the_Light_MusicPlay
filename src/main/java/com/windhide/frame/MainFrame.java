@@ -17,10 +17,13 @@ public class MainFrame {
 
 	private JFrame frame;
 	private JTextField searchTextField;
-	private JButton playButton;
-	private JButton stopButton;
+	private JButton playButton, stopButton;
+	private JScrollPane scrollPane;
 	private JTable table;
 	private JButton changeTapKey;
+	private JProgressBar PlayBar;
+	private JLabel playBarText, musicTypeLabel, playBarMusicName, lblNewLabel;
+	private JComboBox comboMusicType;
 
 	public MainFrame() {
 		initialize();
@@ -36,7 +39,7 @@ public class MainFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false); // 禁止调整窗口大小
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 54, 400, 411);
 		frame.getContentPane().add(scrollPane);
 
@@ -48,7 +51,7 @@ public class MainFrame {
 		reloadTable(table, null);
 		scrollPane.setViewportView(table);
 
-		JLabel lblNewLabel = new JLabel("搜索歌曲:");
+		lblNewLabel = new JLabel("搜索歌曲:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setBounds(10, 10, 73, 34);
 		frame.getContentPane().add(lblNewLabel);
@@ -61,7 +64,7 @@ public class MainFrame {
 
 		playButton = new JButton("播放");
 		playButton.setFont(new Font("宋体", Font.PLAIN, 17));
-		playButton.setBounds(420, 10, 218, 50);
+		playButton.setBounds(420, 54, 218, 50);
 		playButton.addActionListener(e -> {
 			try {
 				String musicName = table.getValueAt(table.getSelectedRow(), 0) + ".txt";
@@ -75,7 +78,7 @@ public class MainFrame {
 
 		stopButton = new JButton("停止");
 		stopButton.setFont(new Font("宋体", Font.PLAIN, 17));
-		stopButton.setBounds(420, 70, 218, 50);
+		stopButton.setBounds(420, 188, 218, 50);
 		frame.getContentPane().add(stopButton);
 		stopButton.addActionListener(e -> StaticUtil.playThread.stop());
 
@@ -86,7 +89,7 @@ public class MainFrame {
 			}
 		});
 		changeTapKey.setFont(new Font("宋体", Font.PLAIN, 17));
-		changeTapKey.setBounds(420, 130, 218, 50);
+		changeTapKey.setBounds(420, 413, 218, 50);
 		frame.getContentPane().add(changeTapKey);
 
 		searchTextField.addKeyListener(new KeyAdapter() {
@@ -95,6 +98,31 @@ public class MainFrame {
 				reloadTable(table, searchTextField.getText());
 			}
 		});
+
+		PlayBar = new JProgressBar();
+		PlayBar.setValue(50);
+		PlayBar.setBounds(420, 164, 215, 14);
+		frame.getContentPane().add(PlayBar);
+
+		playBarText = new JLabel("播放进度条");
+		playBarText.setHorizontalAlignment(SwingConstants.CENTER);
+		playBarText.setBounds(420, 114, 218, 15);
+		frame.getContentPane().add(playBarText);
+
+		playBarMusicName = new JLabel("正在放的歌曲");
+		playBarMusicName.setHorizontalAlignment(SwingConstants.CENTER);
+		playBarMusicName.setBounds(420, 139, 218, 15);
+		frame.getContentPane().add(playBarMusicName);
+
+		comboMusicType = new JComboBox();
+		comboMusicType.setBounds(503, 14, 132, 28);
+		frame.getContentPane().add(comboMusicType);
+
+		musicTypeLabel = new JLabel("分类选择");
+		musicTypeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		musicTypeLabel.setBounds(420, 21, 73, 15);
+		frame.getContentPane().add(musicTypeLabel);
+
 		frame.setVisible(true);
 	}
 

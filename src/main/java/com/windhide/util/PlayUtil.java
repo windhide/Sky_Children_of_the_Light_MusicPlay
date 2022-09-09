@@ -47,8 +47,12 @@ public class PlayUtil {
         }
         StaticUtil.nowPlayMusic = music;
 
+        // 这里设置窗口的歌名显示
+        StaticUtil.mainFrame.playBarMusicName.setText(musicName.replaceAll(".txt", ""));
+
         Thread playBarThread = new Thread(StaticUtil.playBarRunnable);
         StaticUtil.playBarThread = playBarThread;
+        StaticUtil.nowPlayTime = music.get(0).getDelay(); // 提前放置，避免null
         StaticUtil.playBarThread.start();
 
         for (int i = 0; i < music.size(); i++) {
@@ -62,7 +66,8 @@ public class PlayUtil {
                 robot.keyPress(s.charAt(0));
                 robot.keyRelease(s.charAt(0));
             }
-            System.out.println("Press \t ->" + s);
+            StaticUtil.nowPlayTime = music.get(i).getDelay();
+//            System.out.println("Press \t ->" + s);
             try {
                 long delay = music.get(i + 1).getDelay() - music.get(i).getDelay();
                 Thread.sleep(delay);

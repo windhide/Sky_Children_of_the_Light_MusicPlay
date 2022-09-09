@@ -1,25 +1,26 @@
 package com.windhide.runnable;
 
-import com.windhide.entity.Music;
 import com.windhide.util.StaticUtil;
-
-import java.util.List;
 
 public class PlayBarRunnable implements Runnable {
 
     @Override
     public void run() {
-        List<Music> nowPlayMusic = StaticUtil.nowPlayMusic;
-        Long endTime = nowPlayMusic.get(nowPlayMusic.size()).getDelay();
-        if (nowPlayMusic != null) {
-            for (int i = 0; i < nowPlayMusic.size(); i++) {
-                setPlayBar(nowPlayMusic.get(i).getDelay(), endTime);
-            }
+        Long endTime = StaticUtil.nowPlayMusic.get(StaticUtil.nowPlayMusic.size() - 1).getDelay();
+        while (StaticUtil.nowPlayMusic != null) {
+            System.out.println(StaticUtil.nowPlayTime + "/" + endTime);
+            setPlayBar(StaticUtil.nowPlayTime, endTime);
         }
     }
 
     public void setPlayBar(Long startTime, Long endTime) {
-        System.out.println(Math.round(startTime / endTime));
-        StaticUtil.mainFrame.playBar.setValue(Math.round(startTime / endTime));
+        Double start = Double.valueOf(startTime);
+        Double end = Double.valueOf(endTime);
+        StaticUtil.mainFrame.playBar.setValue((int) Math.round((start / end) * 100));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

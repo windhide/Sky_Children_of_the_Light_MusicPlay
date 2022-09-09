@@ -18,4 +18,5 @@ public class StaticUtil {
     public static Thread playBarThread;
 
     public static List<Music> nowPlayMusic;
+    public static Long nowPlayTime;
 }

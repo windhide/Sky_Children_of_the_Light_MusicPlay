@@ -22,7 +22,7 @@ public class MainFrame {
 	private JTable table;
 	private JButton changeTapKey;
 	public JProgressBar playBar;
-	private JLabel playBarMusicName, lblNewLabel;
+	public JLabel playBarMusicName, lblNewLabel;
 
 	public MainFrame() {
 		initialize();
@@ -69,7 +69,6 @@ public class MainFrame {
 				String musicName = table.getValueAt(table.getSelectedRow(), 0) + ".txt";
 				new TextMusicScoreUtil().playTextMusic(musicName);
 			} catch (Exception exception) {
-				exception.printStackTrace();
 				JOptionPane.showMessageDialog(null, "请先选择歌曲", "错误", JOptionPane.WARNING_MESSAGE);
 			}
 		});
@@ -85,6 +84,8 @@ public class MainFrame {
 				StaticUtil.playThread = null;
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(null, "没有正在进行的歌曲", null, JOptionPane.WARNING_MESSAGE);
+			} finally {
+				StaticUtil.nowPlayMusic = null;
 			}
 			playBarMusicName.setText("当前没有播放的歌曲");
 			//重置进度条时间

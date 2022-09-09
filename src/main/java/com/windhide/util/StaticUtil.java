@@ -9,4 +9,8 @@ public class StaticUtil {
     public static PlayRunnable playRunnable;
     public static Thread playThread;
     public static MainFrame mainFrame;
+
+    public static long nowPlayTime;
+
+    public static long endPlayTime;
 }

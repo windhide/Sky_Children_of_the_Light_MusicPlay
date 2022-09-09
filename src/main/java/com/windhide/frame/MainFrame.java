@@ -21,7 +21,7 @@ public class MainFrame {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JButton changeTapKey;
-	private JProgressBar PlayBar;
+	private JProgressBar playBar;
 	private JLabel playBarMusicName, lblNewLabel;
 
 	public MainFrame() {
@@ -82,6 +82,10 @@ public class MainFrame {
 		stopButton.addActionListener((ActionListener) e -> {
 			StaticUtil.playThread.stop();
 			playBarMusicName.setText("当前没有播放的歌曲");
+			StaticUtil.nowPlayTime = 0;
+			StaticUtil.endPlayTime = 0;
+			//重置进度条时间
+			playBar.setValue(0);
 		});
 
 		changeTapKey = new JButton("改键位");
@@ -101,10 +105,10 @@ public class MainFrame {
 			}
 		});
 
-		PlayBar = new JProgressBar();
-		PlayBar.setValue(50);
-		PlayBar.setBounds(420, 159, 215, 14);
-		frame.getContentPane().add(PlayBar);
+		playBar = new JProgressBar();
+		playBar.setValue(50);
+		playBar.setBounds(420, 159, 215, 14);
+		frame.getContentPane().add(playBar);
 
 		playBarMusicName = new JLabel("当前没有播放的歌曲");
 		playBarMusicName.setHorizontalAlignment(SwingConstants.CENTER);

@@ -19,6 +19,7 @@ public class PlayBarRunnable implements Runnable {
         StaticUtil.mainFrame.playBar.setValue((int) Math.round((start / end) * 100));
         try {
             Thread.sleep(1000);
+            // 这条并不会影响主线程。所以bug修复
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

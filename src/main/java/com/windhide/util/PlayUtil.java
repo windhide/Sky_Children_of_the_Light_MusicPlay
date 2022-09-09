@@ -50,8 +50,7 @@ public class PlayUtil {
         // 这里设置窗口的歌名显示
         StaticUtil.mainFrame.playBarMusicName.setText(musicName.replaceAll(".txt", ""));
 
-        Thread playBarThread = new Thread(StaticUtil.playBarRunnable);
-        StaticUtil.playBarThread = playBarThread;
+        StaticUtil.playBarThread = new Thread(StaticUtil.playBarRunnable);
         StaticUtil.nowPlayTime = music.get(0).getDelay(); // 提前放置，避免null
         StaticUtil.playBarThread.start();
 

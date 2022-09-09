@@ -11,20 +11,21 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class TextMusicScoreUtil {
 
     String[] EncodingList = new String[]{"UTF-8", "UTF-16", "GBK", "ANSI"};
     List<String> FileNameList = new ArrayList<>();
-    String originPath = this.getClass().getClassLoader().getResource("").getPath() + "MusicScore";
+    String originPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("")).getPath() + "MusicScore";
 
     public TextMusicScoreUtil() {
         File file = new File(originPath);
         if (file.isDirectory()) {
             File[] files = file.listFiles();
-            for (int i = 0; i < files.length; i++) {
-                FileNameList.add(files[i].getName());
+            for (File value : Objects.requireNonNull(files)) {
+                FileNameList.add(value.getName());
             }
         }
     }
@@ -39,7 +40,7 @@ public class TextMusicScoreUtil {
         File file = new File(originPath + "/" + textMusicPath);
         BufferedReader reader = null;
         String tempStr = "";
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
 
         // 读取文件内容
         try {
@@ -75,7 +76,7 @@ public class TextMusicScoreUtil {
             try {
                 textMusic = getTextMusicForList(fileName, s);
             } catch (Exception e) {
-
+                // 只为了catch
             }
             if (textMusic != null) {
                 return textMusic;

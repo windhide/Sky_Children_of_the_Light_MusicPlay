@@ -25,14 +25,4 @@ public class KeyTap {
 
     public HashMap<String, String> hashMap = new HashMap<>();
 
-    public void hashMapInstall() {
-        hashMap.put("1",Do);
-        hashMap.put("2",Re);
-        hashMap.put("3",Mi);
-        hashMap.put("4",Fa);
-        hashMap.put("5",So);
-        hashMap.put("6",La);
-        hashMap.put("7",Xi);
-    }
-
 }

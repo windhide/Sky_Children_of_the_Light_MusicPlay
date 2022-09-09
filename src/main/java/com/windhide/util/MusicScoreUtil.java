@@ -4,7 +4,6 @@ import com.windhide.entity.Tap.KeyTap;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public enum MusicScoreUtil {
 //    Music1(1, "小兔子乖乖", "5h1655\n3_56h155\n65322\n35_32_31\n6565\n365\n55321\n112131");
@@ -33,7 +32,6 @@ public enum MusicScoreUtil {
 //    }
 
     public List<String> musicMapOrder(KeyTap keyTapUtil) {
-        keyTapUtil.hashMapInstall();
         String music = musicTap.replaceAll("h1", keyTapUtil.H_Do)      // 高Do
                 .replaceAll("h2", keyTapUtil.H_Re)   // 高Re
                 .replaceAll("h3", keyTapUtil.H_Mi)   // 高Mi

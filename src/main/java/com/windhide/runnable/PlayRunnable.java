@@ -4,6 +4,8 @@ package com.windhide.runnable;
 import com.windhide.util.PlayUtil;
 import com.windhide.util.StaticUtil;
 
+import javax.swing.*;
+
 public class PlayRunnable implements Runnable {
 
     private String musicName = "";
@@ -15,6 +17,13 @@ public class PlayRunnable implements Runnable {
 
     @Override
     public void run() {
-        PlayUtil.textMusicPlay(musicName, StaticUtil.keyTap);
+        try {
+            PlayUtil.textMusicPlay(musicName, StaticUtil.keyTap);
+        } catch (Exception e) {
+            StaticUtil.playThread.stop();
+            JOptionPane.showMessageDialog(null, "请先设置按键！！", "错误", JOptionPane.WARNING_MESSAGE);
+
+            // 如果出错直接终止线程
+        }
     }
 }

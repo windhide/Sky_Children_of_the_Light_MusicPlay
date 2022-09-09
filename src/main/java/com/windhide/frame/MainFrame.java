@@ -1,6 +1,5 @@
 package com.windhide.frame;
 
-import com.windhide.runnable.PlayRunnable;
 import com.windhide.util.StaticUtil;
 import com.windhide.util.TextMusicScoreUtil;
 
@@ -31,46 +30,42 @@ public class MainFrame {
 		frame = new JFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("").getPath() + "images/icon.jpg"));
 		frame.setTitle("小星弹琴软件");
-		frame.setBounds(100, 100, 809, 626);
+		frame.setBounds(100, 100, 661, 512);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setResizable(false); // 禁止调整窗口大小
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 54, 535, 509);
+		scrollPane.setBounds(10, 54, 400, 411);
 		frame.getContentPane().add(scrollPane);
 
-		table = new JTable();
+		table = new JTable() {
+			public boolean isCellEditable(int row, int column) {
+				return false; // 禁止编辑表格
+			}
+		};
 		reloadTable(table, null);
 		scrollPane.setViewportView(table);
 
 		JLabel lblNewLabel = new JLabel("搜索歌曲:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(10, 10, 87, 34);
+		lblNewLabel.setBounds(10, 10, 73, 34);
 		frame.getContentPane().add(lblNewLabel);
 
 		searchTextField = new JTextField();
-		searchTextField.setBounds(107, 10, 448, 28);
+		searchTextField.setBounds(99, 14, 311, 28);
 		frame.getContentPane().add(searchTextField);
 		searchTextField.setColumns(10);
 
 
 		playButton = new JButton("播放");
 		playButton.setFont(new Font("宋体", Font.PLAIN, 17));
-		playButton.setBounds(565, 16, 218, 50);
+		playButton.setBounds(420, 10, 218, 50);
 		playButton.addActionListener(e -> {
 			try {
 				String musicName = table.getValueAt(table.getSelectedRow(), 0) + ".txt";
-				PlayRunnable playRunnable = null;
-				Thread playThread = null;
-				if (StaticUtil.playRunnable == null) {
-					playRunnable = new PlayRunnable();
-					StaticUtil.playRunnable = playRunnable;
-				}
-				StaticUtil.playRunnable.setMusicName(musicName);
-				playThread = new Thread(StaticUtil.playRunnable);
-				StaticUtil.playThread = playThread;
-				StaticUtil.playThread.start();
+				new TextMusicScoreUtil().playTextMusic(musicName);
 			} catch (Exception exception) {
 				exception.printStackTrace();
 				JOptionPane.showMessageDialog(null, "请先选择歌曲", "错误", JOptionPane.WARNING_MESSAGE);
@@ -80,7 +75,7 @@ public class MainFrame {
 
 		stopButton = new JButton("停止");
 		stopButton.setFont(new Font("宋体", Font.PLAIN, 17));
-		stopButton.setBounds(565, 76, 218, 50);
+		stopButton.setBounds(420, 70, 218, 50);
 		frame.getContentPane().add(stopButton);
 		stopButton.addActionListener(e -> StaticUtil.playThread.stop());
 
@@ -91,7 +86,7 @@ public class MainFrame {
 			}
 		});
 		changeTapKey.setFont(new Font("宋体", Font.PLAIN, 17));
-		changeTapKey.setBounds(565, 136, 218, 50);
+		changeTapKey.setBounds(420, 130, 218, 50);
 		frame.getContentPane().add(changeTapKey);
 
 		searchTextField.addKeyListener(new KeyAdapter() {

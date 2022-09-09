@@ -15,13 +15,9 @@ import java.util.Objects;
  */
 public class PlayUtil {
 
-    public static void textMusicPlay(String musicName, KeyTap keyTap) {
+    public static void textMusicPlay(String musicName, KeyTap keyTap) throws AWTException {
         Robot robot = null;
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            throw new RuntimeException(e);
-        }
+        robot = new Robot();
         TapTransforUtil tapTransforUtil = new TapTransforUtil(keyTap);
         HashMap<String, String> hashMap = tapTransforUtil.tapMap;
         List<String> list = MusicScoreUtil.Music1.musicMapOrder(keyTap);

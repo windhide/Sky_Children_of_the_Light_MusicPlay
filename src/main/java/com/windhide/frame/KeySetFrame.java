@@ -35,6 +35,7 @@ public class KeySetFrame {
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setResizable(false); // 禁止调整窗口大小
 
 		JPanel tapKeyEditPane = new JPanel();
 		tapKeyEditPane.setBounds(10, 10, 671, 226);

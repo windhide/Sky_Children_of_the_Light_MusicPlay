@@ -3,10 +3,14 @@ package com.windhide.util;
 
 import com.alibaba.fastjson.JSON;
 import com.windhide.entity.MusicType.TextMusic;
+import com.windhide.runnable.PlayRunnable;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class TextMusicScoreUtil {
@@ -78,6 +82,19 @@ public class TextMusicScoreUtil {
             }
         }
         return null;
+    }
+
+    public void playTextMusic(String musicText) {
+        PlayRunnable playRunnable = null;
+        Thread playThread = null;
+        if (StaticUtil.playRunnable == null) {
+            playRunnable = new PlayRunnable();
+            StaticUtil.playRunnable = playRunnable;
+        }
+        StaticUtil.playRunnable.setMusicName(musicText);
+        playThread = new Thread(StaticUtil.playRunnable);
+        StaticUtil.playThread = playThread;
+        StaticUtil.playThread.start();
     }
 
 }

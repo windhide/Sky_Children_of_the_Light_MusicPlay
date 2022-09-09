@@ -95,6 +95,7 @@ public class TextMusicScoreUtil {
         playThread = new Thread(StaticUtil.playRunnable);
         StaticUtil.playThread = playThread;
         StaticUtil.playThread.start();
+
     }
 
 }

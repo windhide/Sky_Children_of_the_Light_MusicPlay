@@ -21,7 +21,7 @@ public class MainFrame {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private JButton changeTapKey;
-	private JProgressBar playBar;
+	public JProgressBar playBar;
 	private JLabel playBarMusicName, lblNewLabel;
 
 	public MainFrame() {
@@ -80,10 +80,13 @@ public class MainFrame {
 		stopButton.setBounds(420, 74, 218, 50);
 		frame.getContentPane().add(stopButton);
 		stopButton.addActionListener((ActionListener) e -> {
-			StaticUtil.playThread.stop();
+			try {
+				StaticUtil.playThread.stop();
+				StaticUtil.playThread = null;
+			} catch (Exception exception) {
+				JOptionPane.showMessageDialog(null, "没有正在进行的歌曲", null, JOptionPane.WARNING_MESSAGE);
+			}
 			playBarMusicName.setText("当前没有播放的歌曲");
-			StaticUtil.nowPlayTime = 0;
-			StaticUtil.endPlayTime = 0;
 			//重置进度条时间
 			playBar.setValue(0);
 		});
@@ -106,7 +109,7 @@ public class MainFrame {
 		});
 
 		playBar = new JProgressBar();
-		playBar.setValue(50);
+		playBar.setValue(0);
 		playBar.setBounds(420, 159, 215, 14);
 		frame.getContentPane().add(playBar);
 
@@ -114,7 +117,6 @@ public class MainFrame {
 		playBarMusicName.setHorizontalAlignment(SwingConstants.CENTER);
 		playBarMusicName.setBounds(420, 134, 218, 15);
 		frame.getContentPane().add(playBarMusicName);
-
 		frame.setVisible(true);
 	}
 

@@ -3,6 +3,7 @@ package com.windhide.util;
 import com.windhide.entity.Music;
 import com.windhide.entity.MusicType.TextMusicNotes;
 import com.windhide.entity.Tap.KeyTap;
+import com.windhide.runnable.PlayBarRunnable;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ public class PlayUtil {
         robot = new Robot();
         TapTransforUtil tapTransforUtil = new TapTransforUtil(keyTap);
         HashMap<String, String> hashMap = tapTransforUtil.tapMap;
-
         TextMusicScoreUtil textMusicScoreUtil = new TextMusicScoreUtil();
         List<TextMusicNotes> songNotes = textMusicScoreUtil.getFileNameList(musicName).getSongNotes();
         List<Music> music = new ArrayList<>();
@@ -39,6 +39,18 @@ public class PlayUtil {
                 music.add(tempMusic);
             }
         }
+
+        PlayBarRunnable playBarRunnable = null;
+        if (StaticUtil.playBarRunnable == null) {
+            playBarRunnable = new PlayBarRunnable();
+            StaticUtil.playBarRunnable = playBarRunnable;
+        }
+        StaticUtil.nowPlayMusic = music;
+
+        Thread playBarThread = new Thread(StaticUtil.playBarRunnable);
+        StaticUtil.playBarThread = playBarThread;
+        StaticUtil.playBarThread.start();
+
         for (int i = 0; i < music.size(); i++) {
             String s = music.get(i).getTap().toUpperCase();
             if (s.length() > 1) {
@@ -62,5 +74,8 @@ public class PlayUtil {
                 }
             }
         }
+        StaticUtil.playBarThread.stop(); // 终止线程
+        StaticUtil.playBarRunnable = null; // 线程归零;
+        StaticUtil.nowPlayMusic = null; // 停止进度条
     }
 }

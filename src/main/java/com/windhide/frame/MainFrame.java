@@ -116,7 +116,6 @@ public class MainFrame {
 
 	public void reloadTable(JTable table, String searchSongName) {
 		TextMusicScoreUtil textMusicScoreUtil = new TextMusicScoreUtil();
-		System.out.println(searchSongName);
 		List<String> songNameList = null;
 		if (searchSongName != null && searchSongName != "") {
 			songNameList = textMusicScoreUtil.FileNameList().stream().filter(s -> s.contains(searchSongName)).collect(Collectors.toList());

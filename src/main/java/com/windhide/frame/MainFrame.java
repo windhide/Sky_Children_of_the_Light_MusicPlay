@@ -22,8 +22,7 @@ public class MainFrame {
 	private JTable table;
 	private JButton changeTapKey;
 	private JProgressBar PlayBar;
-	private JLabel playBarText, musicTypeLabel, playBarMusicName, lblNewLabel;
-	private JComboBox comboMusicType;
+	private JLabel playBarMusicName, lblNewLabel;
 
 	public MainFrame() {
 		initialize();
@@ -78,9 +77,12 @@ public class MainFrame {
 
 		stopButton = new JButton("停止");
 		stopButton.setFont(new Font("宋体", Font.PLAIN, 17));
-		stopButton.setBounds(420, 148, 218, 50);
+		stopButton.setBounds(420, 74, 218, 50);
 		frame.getContentPane().add(stopButton);
-		stopButton.addActionListener(e -> StaticUtil.playThread.stop());
+		stopButton.addActionListener((ActionListener) e -> {
+			StaticUtil.playThread.stop();
+			playBarMusicName.setText("当前没有播放的歌曲");
+		});
 
 		changeTapKey = new JButton("改键位");
 		changeTapKey.addActionListener(new ActionListener() {
@@ -101,17 +103,12 @@ public class MainFrame {
 
 		PlayBar = new JProgressBar();
 		PlayBar.setValue(50);
-		PlayBar.setBounds(420, 124, 215, 14);
+		PlayBar.setBounds(420, 159, 215, 14);
 		frame.getContentPane().add(PlayBar);
 
-		playBarText = new JLabel("播放进度条");
-		playBarText.setHorizontalAlignment(SwingConstants.CENTER);
-		playBarText.setBounds(420, 74, 218, 15);
-		frame.getContentPane().add(playBarText);
-
-		playBarMusicName = new JLabel("正在放的歌曲");
+		playBarMusicName = new JLabel("当前没有播放的歌曲");
 		playBarMusicName.setHorizontalAlignment(SwingConstants.CENTER);
-		playBarMusicName.setBounds(420, 99, 218, 15);
+		playBarMusicName.setBounds(420, 134, 218, 15);
 		frame.getContentPane().add(playBarMusicName);
 
 		frame.setVisible(true);

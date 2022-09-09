@@ -20,7 +20,6 @@ public class PlayUtil {
         robot = new Robot();
         TapTransforUtil tapTransforUtil = new TapTransforUtil(keyTap);
         HashMap<String, String> hashMap = tapTransforUtil.tapMap;
-        List<String> list = MusicScoreUtil.Music1.musicMapOrder(keyTap);
 
         TextMusicScoreUtil textMusicScoreUtil = new TextMusicScoreUtil();
         List<TextMusicNotes> songNotes = textMusicScoreUtil.getFileNameList(musicName).getSongNotes();

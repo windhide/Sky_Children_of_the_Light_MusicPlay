@@ -22,7 +22,6 @@ public class PlayRunnable implements Runnable {
         } catch (Exception e) {
             StaticUtil.playThread.stop();
             JOptionPane.showMessageDialog(null, "请先设置按键！！", "错误", JOptionPane.WARNING_MESSAGE);
-
             // 如果出错直接终止线程
         }
     }

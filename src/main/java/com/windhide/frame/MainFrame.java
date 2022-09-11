@@ -30,7 +30,7 @@ public class MainFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("").getPath() + "images/icon.jpg"));
+		frame.setIconImage(StaticUtil.iconImage);
 		frame.setTitle("小星弹琴软件");
 		frame.setBounds(100, 100, 661, 512);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -6,6 +6,7 @@ import com.windhide.frame.MainFrame;
 import com.windhide.runnable.PlayBarRunnable;
 import com.windhide.runnable.PlayRunnable;
 
+import java.awt.*;
 import java.util.List;
 
 public class StaticUtil {
@@ -19,4 +20,6 @@ public class StaticUtil {
 
     public static List<Music> nowPlayMusic;
     public static Long nowPlayTime;
+
+    public static Image iconImage;
 }

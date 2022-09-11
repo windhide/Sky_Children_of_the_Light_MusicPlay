@@ -4,7 +4,6 @@ import com.windhide.entity.Tap.KeyTap;
 import com.windhide.util.StaticUtil;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,7 +28,7 @@ public class KeySetFrame {
 
 	public KeySetFrame() {
 		frame = new JFrame();
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("").getPath() + "images/icon.jpg"));
+		frame.setIconImage(StaticUtil.iconImage);
 		frame.setTitle("按键设置");
 		frame.setBounds(100, 100, 699, 275);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

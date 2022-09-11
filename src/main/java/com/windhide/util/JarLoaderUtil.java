@@ -37,6 +37,7 @@ public class JarLoaderUtil {
             }
         }
         StaticUtil.fileNameList = fileNameList;
+
         file.close();
     }
 }

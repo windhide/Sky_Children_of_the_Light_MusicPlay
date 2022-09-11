@@ -20,6 +20,7 @@ public class PlayRunnable implements Runnable {
         try {
             PlayUtil.textMusicPlay(musicName, StaticUtil.keyTap);
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "请先设置按键！！", "错误", JOptionPane.WARNING_MESSAGE);
             StaticUtil.playThread.stop();
             // 如果出错直接终止线程

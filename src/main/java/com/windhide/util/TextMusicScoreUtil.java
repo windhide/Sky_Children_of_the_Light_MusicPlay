@@ -6,29 +6,15 @@ import com.windhide.entity.MusicType.TextMusic;
 import com.windhide.runnable.PlayRunnable;
 
 import java.io.BufferedReader;
-import java.io.File;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.util.ArrayList;
+import java.net.URL;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class TextMusicScoreUtil {
 
     String[] EncodingList = new String[]{"UTF-8", "UTF-16", "GBK", "ANSI"};
-    List<String> FileNameList = new ArrayList<>();
-    String originPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("")).getPath() + "MusicScore";
-
-    public TextMusicScoreUtil() {
-        File file = new File(originPath);
-        if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            for (File value : Objects.requireNonNull(files)) {
-                FileNameList.add(value.getName());
-            }
-        }
-    }
+    List<String> FileNameList = StaticUtil.fileNameList;
 
     public List<String> FileNameList() {
         return FileNameList;
@@ -36,15 +22,14 @@ public class TextMusicScoreUtil {
 
     public TextMusic getTextMusicForList(String fileName, String Encoding) {
         // 文件路径处理
-        String textMusicPath = FileNameList.stream().filter(fileName::equals).collect(Collectors.toList()).get(0);
-        File file = new File(originPath + "/" + textMusicPath);
+        URL url = TextMusicScoreUtil.class.getResource("/MusicScore/" + fileName);
         BufferedReader reader = null;
         String tempStr = "";
         StringBuilder stringBuffer = new StringBuilder();
-
         // 读取文件内容
         try {
-            InputStreamReader read = new InputStreamReader(Files.newInputStream(file.toPath()), Encoding);
+            InputStream input = url.openStream();
+            InputStreamReader read = new InputStreamReader(input, Encoding);
             reader = new BufferedReader(read);
             while ((tempStr = reader.readLine()) != null) {
                 stringBuffer.append(tempStr);
@@ -75,6 +60,7 @@ public class TextMusicScoreUtil {
             TextMusic textMusic = null;
             try {
                 textMusic = getTextMusicForList(fileName, s);
+                System.out.println(fileName);
             } catch (Exception e) {
                 // 只为了catch
             }

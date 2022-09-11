@@ -22,4 +22,6 @@ public class StaticUtil {
     public static Long nowPlayTime;
 
     public static Image iconImage;
+
+    public static List<String> fileNameList;
 }

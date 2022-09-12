@@ -86,7 +86,7 @@ public class TextMusicScoreUtil {
                 textMusic = getTextMusicForList(fileName, s);
                 System.out.println(fileName);
             } catch (Exception e) {
-                // 只为了catch
+                // 只为了catch 妹妹的芝士很有韵味
             }
             if (textMusic != null) {
                 return textMusic;

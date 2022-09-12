@@ -85,9 +85,13 @@ public class PlayUtil {
                 }
             }
         }
-        StaticUtil.playBarThread.stop(); // 终止线程
         StaticUtil.playBarRunnable = null; // 线程归零;
         StaticUtil.nowPlayMusic = null; // 停止进度条
+        StaticUtil.playThread = null; // 清除歌曲播放
+        StaticUtil.playRunnable = null; // 清除歌曲Runnable
+        StaticUtil.mainFrame.playBar.setValue(100);
+        StaticUtil.mainFrame.playBarMusicName.setText("歌曲播放完毕");
+        StaticUtil.playBarThread.stop(); // 终止线程
     }
 
     /**

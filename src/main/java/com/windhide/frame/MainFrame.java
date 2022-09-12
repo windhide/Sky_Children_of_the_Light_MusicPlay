@@ -82,6 +82,7 @@ public class MainFrame {
 			try {
 				StaticUtil.playThread.stop();
 				StaticUtil.playThread = null;
+				StaticUtil.playRunnable = null;
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(null, "没有正在进行的歌曲", null, JOptionPane.WARNING_MESSAGE);
 			} finally {

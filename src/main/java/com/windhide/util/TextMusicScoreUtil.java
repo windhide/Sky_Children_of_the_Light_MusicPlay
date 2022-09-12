@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.windhide.entity.MusicType.TextMusic;
 import com.windhide.runnable.PlayRunnable;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -100,12 +101,13 @@ public class TextMusicScoreUtil {
         if (StaticUtil.playRunnable == null) {
             playRunnable = new PlayRunnable();
             StaticUtil.playRunnable = playRunnable;
+            StaticUtil.playRunnable.setMusicName(musicText);
+            playThread = new Thread(StaticUtil.playRunnable);
+            StaticUtil.playThread = playThread;
+            StaticUtil.playThread.start();
+        } else {
+            JOptionPane.showMessageDialog(null, "已有正在播放的歌曲，请先停止！", null, JOptionPane.WARNING_MESSAGE);
         }
-        StaticUtil.playRunnable.setMusicName(musicText);
-        playThread = new Thread(StaticUtil.playRunnable);
-        StaticUtil.playThread = playThread;
-        StaticUtil.playThread.start();
-
     }
 
 }

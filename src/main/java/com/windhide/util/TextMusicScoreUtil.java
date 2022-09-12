@@ -54,7 +54,30 @@ public class TextMusicScoreUtil {
         return JSON.parseObject(data, TextMusic.class);
     }
 
+    /**
+     * 调试模式使用的方法
+     *
+     * @param fileName
+     * @return
+     */
+//    public TextMusic getFileNameList(String fileName) {
+//        //用来匹配正确的编码格式
+//        for (String s : EncodingList) {
+//            TextMusic textMusic = null;
+//            try {
+//                textMusic = getTextMusicForList(fileName, s);
+//                System.out.println(fileName);
+//            } catch (Exception e) {
+//                // 只为了catch
+//            }
+//            if (textMusic != null) {
+//                return textMusic;
+//            }
+//        }
+//        return null;
+//    }
     public TextMusic getFileNameList(String fileName) {
+
         //用来匹配正确的编码格式
         for (String s : EncodingList) {
             TextMusic textMusic = null;

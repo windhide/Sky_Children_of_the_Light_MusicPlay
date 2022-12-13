@@ -23,7 +23,7 @@ public class PlayUtil {
      * @param keyTap
      * @throws AWTException
      */
-    public static void textMusicPlay(String musicName, KeyTap keyTap) throws AWTException {
+    public static void textMusicPlay(String musicName, KeyTap keyTap) throws AWTException, InterruptedException {
         Robot robot = null;
         robot = new Robot();
         TapTransforUtil tapTransforUtil = new TapTransforUtil(keyTap);
@@ -59,6 +59,10 @@ public class PlayUtil {
 
         StaticUtil.playBarThread = new Thread(StaticUtil.playBarRunnable);
         StaticUtil.nowPlayTime = music.get(0).getDelay(); // 提前放置，避免null
+
+        // 设置成3秒，给用户操作机会
+        Thread.sleep(3000);
+
         StaticUtil.playBarThread.start();
 
         for (int i = 0; i < music.size(); i++) {

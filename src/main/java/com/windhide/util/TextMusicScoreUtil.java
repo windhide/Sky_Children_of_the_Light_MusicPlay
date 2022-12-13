@@ -2,18 +2,19 @@ package com.windhide.util;
 
 
 import com.alibaba.fastjson.JSON;
+import com.windhide.Start;
 import com.windhide.entity.MusicType.TextMusic;
+import com.windhide.entity.Tap.KeyTap;
 import com.windhide.runnable.PlayRunnable;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.util.List;
 
 public class TextMusicScoreUtil {
 
+    static String keyTapFileName = "KeyboardMapping.json";
     String[] EncodingList = new String[]{"UTF-8", "UTF-16", "GBK", "ANSI"};
     List<String> FileNameList = StaticUtil.fileNameList;
 
@@ -110,4 +111,83 @@ public class TextMusicScoreUtil {
         }
     }
 
+    /**
+     * 加载键盘缓存
+     */
+    public static void getKeyTapInCache() {
+
+        File file = new File(getJarNowPath());
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            StringBuilder KeyTapJson = new StringBuilder();
+            String tempString = null;
+            int line = 1;
+            // 一次读入一行，直到读入null为文件结束
+            while ((tempString = reader.readLine()) != null) {
+                KeyTapJson.append(tempString);
+            }
+            KeyTap keyTap = JSON.parseObject(KeyTapJson.toString(), KeyTap.class);
+            if (keyTap != null) {
+                StaticUtil.keyTap = keyTap;
+                JOptionPane.showMessageDialog(null, "历史按键加载成功！", "芜湖~", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception e) {
+            
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    /**
+     * 放置缓存
+     */
+    public static void putKeyTapInCache(KeyTap keyTap) throws IOException {
+        String cacheData = JSON.toJSONString(keyTap);
+
+        FileWriter fw = null;
+        try {
+            File file = new File(getJarNowPath());
+            if (!file.exists()) {
+                file.createNewFile();
+            }else{
+                file.delete();
+                file.createNewFile();
+            }
+            fw = new FileWriter(getJarNowPath());
+            fw.write(cacheData);
+            JOptionPane.showMessageDialog(null, "软件会在目录下生成键盘的配置文件，这样下次运行就不用重新设置啦~", "芜湖~", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fw.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    /**
+     * 拿到jar包当前路径
+     *
+     * @return
+     */
+    public static String getJarNowPath() {
+        String path = Start.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        if (System.getProperty("os.name").contains("dows")) {
+            path = path.substring(1, path.length());
+        }
+        if (path.contains("jar")) {
+            path = path.substring(0, path.lastIndexOf(".")).substring(0, path.lastIndexOf("/")).replace("target/classes/", "") + "/" + keyTapFileName;
+        }
+        return path;
+    }
 }

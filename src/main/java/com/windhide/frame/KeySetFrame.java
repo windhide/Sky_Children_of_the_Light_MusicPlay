@@ -2,9 +2,12 @@ package com.windhide.frame;
 
 import com.windhide.entity.Tap.KeyTap;
 import com.windhide.frame.document.WordDocument;
+import com.windhide.util.PlayUtil;
 import com.windhide.util.StaticUtil;
+import com.windhide.util.TextMusicScoreUtil;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public class KeySetFrame {
 
@@ -225,6 +228,11 @@ public class KeySetFrame {
 			keyTapUtil.H_Xi = keyTapH_Xi.getText();
 			keyTapUtil.HH_Do = keyTapHH_Do.getText();
 			StaticUtil.keyTap = keyTapUtil;
+			try {
+				TextMusicScoreUtil.putKeyTapInCache(keyTapUtil);
+			} catch (IOException ex) {
+				throw new RuntimeException(ex);
+			}
 			JOptionPane.showMessageDialog(null, "按键设置成功", "成功", JOptionPane.INFORMATION_MESSAGE);
 		});
 		saveKeyTap_1.setBounds(510, 10, 151, 51);

@@ -3,6 +3,8 @@ package com.windhide;
 
 import com.windhide.runnable.FrameRunnable;
 import com.windhide.util.JarLoaderUtil;
+import com.windhide.util.PlayUtil;
+import com.windhide.util.TextMusicScoreUtil;
 
 import java.io.IOException;
 
@@ -15,5 +17,6 @@ public class Start {
         FrameRunnable frameRunnable = new FrameRunnable();
         Thread mainThread = new Thread(frameRunnable);
         mainThread.start();
+        TextMusicScoreUtil.getKeyTapInCache();
     }
 }

@@ -69,7 +69,6 @@ public class MainFrame {
             } catch (Exception exception) {
                 if (StaticUtil.keyTap == null) {
                     JOptionPane.showMessageDialog(null, "没有设置按键！", "错误", JOptionPane.WARNING_MESSAGE);
-
                 } else {
                     if (StaticUtil.playThread != null) {
                         StaticUtil.playThread.stop();

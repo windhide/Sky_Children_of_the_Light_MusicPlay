@@ -4,6 +4,8 @@
 
 - 代码/软件中的曲谱/乐谱的资源，都来自网络，版权争议与作者无关，所有内容及软件的文章仅限用于学习和研究目的。不得将软件用于商业或者非法用途，否则，一切后果请用户自负，侵删请致信E-mail：WindHide520@gmail.com
 
+## 使用教程 https://www.bilibili.com/video/BV1id4y1u7c8/?spm_id_from=333.999.0.0
+
 # MIT
 
 Copyright <2022> <WindHide>

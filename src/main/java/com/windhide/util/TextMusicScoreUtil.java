@@ -9,6 +9,7 @@ import com.windhide.runnable.PlayRunnable;
 
 import javax.swing.*;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -22,9 +23,13 @@ public class TextMusicScoreUtil {
         return FileNameList;
     }
 
-    public TextMusic getTextMusicForList(String fileName, String Encoding) {
+    public TextMusic getTextMusicForList(String fileName, String Encoding) throws MalformedURLException {
         // 文件路径处理
-        URL url = TextMusicScoreUtil.class.getResource("/MusicScore/" + fileName);
+        URL url = null;
+        if(StaticUtil.isSystemPlay)
+            url = TextMusicScoreUtil.class.getResource("/MusicScore/" + fileName);
+        else
+            url = new URL("file:\\"+fileName);
         BufferedReader reader = null;
         String tempStr = "";
         StringBuilder stringBuffer = new StringBuilder();

@@ -24,4 +24,6 @@ public class StaticUtil {
     public static Image iconImage;
 
     public static List<String> fileNameList;
+
+    public static boolean isSystemPlay;
 }

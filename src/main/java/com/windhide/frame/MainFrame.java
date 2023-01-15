@@ -4,18 +4,20 @@ import com.windhide.util.StaticUtil;
 import com.windhide.util.TextMusicScoreUtil;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MainFrame {
+public class MainFrame extends JFrame{
 
     private JFrame frame;
     private JTextField searchTextField;
-    private JButton playButton, stopButton;
+    private JButton playButton, stopButton, editButton;
     private JScrollPane scrollPane;
     private JTable table;
     private JButton changeTapKey;
@@ -65,6 +67,7 @@ public class MainFrame {
         playButton.addActionListener(e -> {
             try {
                 String musicName = table.getValueAt(table.getSelectedRow(), 0) + ".txt";
+                StaticUtil.isSystemPlay = true;
                 new TextMusicScoreUtil().playTextMusic(musicName);
             } catch (Exception exception) {
                 if (StaticUtil.keyTap == null) {
@@ -101,6 +104,48 @@ public class MainFrame {
             //重置进度条时间
             playBar.setValue(0);
         });
+
+        editButton = new JButton("选择外部文件播放");
+        editButton.setFont(new Font("宋体", Font.PLAIN, 17));
+        editButton.setBounds(420,200,218,50);
+        editButton.addActionListener(e ->{
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File f) {
+                    String fName = f.getName().toUpperCase();
+                    if (fName.endsWith(".TXT") || f.isDirectory()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+
+                @Override
+                public String getDescription() {
+                    return "Text File (*.txt)";
+                }
+            });
+            int option = fileChooser.showDialog(MainFrame.this,"选择");
+            if(option==JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                String fileName = file.getAbsolutePath();
+                try {
+                    StaticUtil.isSystemPlay = false;
+                    new TextMusicScoreUtil().playTextMusic(fileName);
+                } catch (Exception exception) {
+                    if (StaticUtil.playThread != null) {
+                        StaticUtil.playThread.stop();
+                    }
+                    StaticUtil.playThread = null;
+                    StaticUtil.playRunnable = null;
+                    StaticUtil.nowPlayMusic = null;
+                    JOptionPane.showMessageDialog(null, "请先选择歌曲或是歌曲无法解析", "错误", JOptionPane.WARNING_MESSAGE);
+                }
+
+            }
+        });
+        frame.getContentPane().add(editButton);
 
         changeTapKey = new JButton("改键位");
         changeTapKey.addActionListener(e -> new KeySetFrame());

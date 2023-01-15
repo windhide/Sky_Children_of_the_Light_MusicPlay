@@ -290,9 +290,4 @@ public class KeySetFrame {
 			keyTapHH_Do.setText(keyTap.HH_Do);
 		}
 	}
-
-	public static void main(String[] args) {
-		new KeySetFrame();
-	}
-
 }

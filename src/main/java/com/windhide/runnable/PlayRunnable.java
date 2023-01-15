@@ -18,7 +18,10 @@ public class PlayRunnable implements Runnable {
     @Override
     public void run() {
         try {
-            PlayUtil.textMusicPlay(musicName, StaticUtil.keyTap);
+            if(StaticUtil.isSystemPlay)
+                PlayUtil.textMusicPlay(musicName, StaticUtil.keyTap);
+            else
+                PlayUtil.textMusicPlay(musicName, StaticUtil.keyTap,true);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "请先设置按键！！", "错误", JOptionPane.WARNING_MESSAGE);

@@ -1,7 +1,10 @@
 package com.windhide.util;
 
 import javax.imageio.ImageIO;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -21,6 +24,10 @@ public class JarLoaderUtil {
         }
     }
 
+    /**
+     * 打jar包放行这个注释
+     * @throws IOException
+     */
     public void setFileNameList() throws IOException {
         // 读取jar包内的文件列表
         List<String> fileNameList = new ArrayList<>();

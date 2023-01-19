@@ -23,4 +23,7 @@ public class StaticUtil {
     public static boolean isSystemPlay;
 
     public static int musicPlayIndex;
+
+    public static int musicPlayMaxIndex;
+
 }

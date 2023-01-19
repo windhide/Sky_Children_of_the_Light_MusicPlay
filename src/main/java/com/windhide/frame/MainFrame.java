@@ -9,7 +9,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -166,10 +170,17 @@ public class MainFrame extends JFrame{
         playBar.setMajorTickSpacing(10);
         playBar.setPaintTicks(true);
         playBar.setPaintLabels(true);
-        playBar.addChangeListener(event->{
-            JSlider source = (JSlider) event.getSource();
-            if (source.getValueIsAdjusting() != true && StaticUtil.nowPlayMusic != null) {
-                StaticUtil.musicPlayIndex = StaticUtil.musicPlayIndex * (source.getValue()/100);
+        playBar.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseReleased(MouseEvent e) {
+                JSlider source = (JSlider) e.getSource();
+                if (!(source.getValueIsAdjusting())) {
+                    BigDecimal percentage = new BigDecimal((float) source.getValue() / 100);
+                    percentage = percentage.setScale(2, RoundingMode.HALF_UP);
+                    percentage.multiply(new BigDecimal(StaticUtil.musicPlayMaxIndex));
+                    StaticUtil.musicPlayIndex = percentage.intValue();
+                    System.out.println(percentage);
+                }
             }
         });
         frame.getContentPane().add(playBar);

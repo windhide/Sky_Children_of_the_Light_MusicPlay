@@ -64,7 +64,7 @@ public class PlayUtil {
         Thread.sleep(3000);
 
         StaticUtil.playBarThread.start();
-
+        StaticUtil.musicPlayMaxIndex = music.size();
         for (StaticUtil.musicPlayIndex = 0; StaticUtil.musicPlayIndex < music.size(); StaticUtil.musicPlayIndex++) {
             String s = music.get(StaticUtil.musicPlayIndex).getTap().toUpperCase();
             if (s.length() > 1) {
@@ -141,7 +141,7 @@ public class PlayUtil {
         StaticUtil.playBarThread = new Thread(StaticUtil.playBarRunnable);
         StaticUtil.nowPlayTime = music.get(0).getDelay(); // 提前放置，避免null
         StaticUtil.playBarThread.start();
-
+        StaticUtil.musicPlayMaxIndex = music.size();
         for (StaticUtil.musicPlayIndex = 0; StaticUtil.musicPlayIndex < music.size(); StaticUtil.musicPlayIndex++) {
             String s = music.get(StaticUtil.musicPlayIndex).getTap().toUpperCase();
             if (s.length() > 1) {

@@ -65,8 +65,8 @@ public class PlayUtil {
 
         StaticUtil.playBarThread.start();
 
-        for (int i = 0; i < music.size(); i++) {
-            String s = music.get(i).getTap().toUpperCase();
+        for (StaticUtil.musicPlayIndex = 0; StaticUtil.musicPlayIndex < music.size(); StaticUtil.musicPlayIndex++) {
+            String s = music.get(StaticUtil.musicPlayIndex).getTap().toUpperCase();
             if (s.length() > 1) {
                 for (int inString = 0; inString < s.length(); inString++) {
                     robot.keyPress(s.charAt(inString));
@@ -76,10 +76,10 @@ public class PlayUtil {
                 robot.keyPress(s.charAt(0));
                 robot.keyRelease(s.charAt(0));
             }
-            StaticUtil.nowPlayTime = music.get(i).getDelay();
+            StaticUtil.nowPlayTime = music.get(StaticUtil.musicPlayIndex).getDelay();
 //            System.out.println("Press \t ->" + s);
             try {
-                long delay = music.get(i + 1).getDelay() - music.get(i).getDelay();
+                long delay = music.get(StaticUtil.musicPlayIndex + 1).getDelay() - music.get(StaticUtil.musicPlayIndex).getDelay();
                 Thread.sleep(delay);
             } catch (Exception e) {
                 try {
@@ -142,8 +142,8 @@ public class PlayUtil {
         StaticUtil.nowPlayTime = music.get(0).getDelay(); // 提前放置，避免null
         StaticUtil.playBarThread.start();
 
-        for (int i = 0; i < music.size(); i++) {
-            String s = music.get(i).getTap().toUpperCase();
+        for (StaticUtil.musicPlayIndex = 0; StaticUtil.musicPlayIndex < music.size(); StaticUtil.musicPlayIndex++) {
+            String s = music.get(StaticUtil.musicPlayIndex).getTap().toUpperCase();
             if (s.length() > 1) {
                 for (int inString = 0; inString < s.length(); inString++) {
                     robot.keyPress(s.charAt(inString));
@@ -153,10 +153,10 @@ public class PlayUtil {
                 robot.keyPress(s.charAt(0));
                 robot.keyRelease(s.charAt(0));
             }
-            StaticUtil.nowPlayTime = music.get(i).getDelay();
+            StaticUtil.nowPlayTime = music.get(StaticUtil.musicPlayIndex).getDelay();
 //            System.out.println("Press \t ->" + s);
             try {
-                long delay = music.get(i + 1).getDelay() - music.get(i).getDelay();
+                long delay = music.get(StaticUtil.musicPlayIndex + 1).getDelay() - music.get(StaticUtil.musicPlayIndex).getDelay();
                 Thread.sleep(delay);
             } catch (Exception e) {
                 try {

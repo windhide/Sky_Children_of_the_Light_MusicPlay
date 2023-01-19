@@ -14,16 +14,13 @@ public class StaticUtil {
     public static PlayRunnable playRunnable;
     public static Thread playThread;
     public static MainFrame mainFrame;
-
     public static PlayBarRunnable playBarRunnable;
     public static Thread playBarThread;
-
     public static List<Music> nowPlayMusic;
     public static Long nowPlayTime;
-
     public static Image iconImage;
-
     public static List<String> fileNameList;
-
     public static boolean isSystemPlay;
+
+    public static int musicPlayIndex;
 }

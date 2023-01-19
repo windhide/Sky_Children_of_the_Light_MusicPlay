@@ -21,7 +21,7 @@ public class MainFrame extends JFrame{
     private JScrollPane scrollPane;
     private JTable table;
     private JButton changeTapKey;
-    public JProgressBar playBar;
+    public JSlider playBar;
     public JLabel playBarMusicName, lblNewLabel;
 
     public MainFrame() {
@@ -107,7 +107,7 @@ public class MainFrame extends JFrame{
 
         editButton = new JButton("选择外部文件播放");
         editButton.setFont(new Font("宋体", Font.PLAIN, 17));
-        editButton.setBounds(420,200,218,50);
+        editButton.setBounds(420,220,218,50);
         editButton.addActionListener(e ->{
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileFilter(new FileFilter() {
@@ -160,14 +160,23 @@ public class MainFrame extends JFrame{
             }
         });
 
-        playBar = new JProgressBar();
+        playBar = new JSlider(0,100,1);
         playBar.setValue(0);
-        playBar.setBounds(420, 159, 215, 14);
+        playBar.setBounds(420, 159, 215, 50);
+        playBar.setMajorTickSpacing(10);
+        playBar.setPaintTicks(true);
+        playBar.setPaintLabels(true);
+        playBar.addChangeListener(event->{
+            JSlider source = (JSlider) event.getSource();
+            if (source.getValueIsAdjusting() != true && StaticUtil.nowPlayMusic != null) {
+                StaticUtil.musicPlayIndex = StaticUtil.musicPlayIndex * (source.getValue()/100);
+            }
+        });
         frame.getContentPane().add(playBar);
 
         playBarMusicName = new JLabel("当前没有播放的歌曲");
         playBarMusicName.setHorizontalAlignment(SwingConstants.CENTER);
-        playBarMusicName.setBounds(420, 134, 218, 15);
+        playBarMusicName.setBounds(420, 134, 218, 25);
         frame.getContentPane().add(playBarMusicName);
         frame.setVisible(true);
     }

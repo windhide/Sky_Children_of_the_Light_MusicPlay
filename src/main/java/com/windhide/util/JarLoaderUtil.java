@@ -28,39 +28,39 @@ public class JarLoaderUtil {
      * 打jar包放行这个注释
      * @throws IOException
      */
-    public void setFileNameList() throws IOException {
-        // 读取jar包内的文件列表
-        List<String> fileNameList = new ArrayList<>();
-        URL url = JarLoaderUtil.class.getProtectionDomain().getCodeSource().getLocation();
-        String filePath = URLDecoder.decode(url.getPath(), "UTF-8");
-        JarFile file = new JarFile(filePath);
-
-        Enumeration<JarEntry> entrys = file.entries();
-        while (entrys.hasMoreElements()) {
-            JarEntry jar = entrys.nextElement();
-            String musicName = jar.getName();
-            if (musicName.contains("MusicScore/") && musicName.contains(".txt")) {
-                fileNameList.add(musicName.replaceAll("MusicScore/", "").replaceAll(".txt", ""));
-            }
-        }
-        StaticUtil.fileNameList = fileNameList;
-
-        file.close();
-    }
-
-    // 调试模式使用的方法
-//    public void  setFileNameList() throws IOException {
+//    public void setFileNameList() throws IOException {
+//        // 读取jar包内的文件列表
 //        List<String> fileNameList = new ArrayList<>();
-//        URL url = JarLoaderUtil.class.getResource("/MusicScore");
-//        InputStream inputStream = url.openStream();
-//        InputStreamReader read = new InputStreamReader(inputStream);
-//        BufferedReader bufferedReader = new BufferedReader(read);
-//        String s;
-//        while((s = bufferedReader.readLine()) != null){
-//            fileNameList.add(s);
+//        URL url = JarLoaderUtil.class.getProtectionDomain().getCodeSource().getLocation();
+//        String filePath = URLDecoder.decode(url.getPath(), "UTF-8");
+//        JarFile file = new JarFile(filePath);
+//
+//        Enumeration<JarEntry> entrys = file.entries();
+//        while (entrys.hasMoreElements()) {
+//            JarEntry jar = entrys.nextElement();
+//            String musicName = jar.getName();
+//            if (musicName.contains("MusicScore/") && musicName.contains(".txt")) {
+//                fileNameList.add(musicName.replaceAll("MusicScore/", "").replaceAll(".txt", ""));
+//            }
 //        }
 //        StaticUtil.fileNameList = fileNameList;
 //
+//        file.close();
 //    }
+
+  //     调试模式使用的方法
+    public void  setFileNameList() throws IOException {
+        List<String> fileNameList = new ArrayList<>();
+        URL url = JarLoaderUtil.class.getResource("/MusicScore");
+        InputStream inputStream = url.openStream();
+        InputStreamReader read = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(read);
+        String s;
+        while((s = bufferedReader.readLine()) != null){
+            fileNameList.add(s);
+        }
+        StaticUtil.fileNameList = fileNameList;
+
+    }
 
 }

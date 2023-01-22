@@ -14,7 +14,10 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MainFrame extends JFrame{
@@ -118,7 +121,7 @@ public class MainFrame extends JFrame{
                 @Override
                 public boolean accept(File f) {
                     String fName = f.getName().toUpperCase();
-                    if (fName.endsWith(".TXT") || f.isDirectory()) {
+                    if (fName.endsWith(".TXT") || fName.endsWith(".JS") || f.isDirectory()) {
                         return true;
                     } else {
                         return false;
@@ -127,7 +130,7 @@ public class MainFrame extends JFrame{
 
                 @Override
                 public String getDescription() {
-                    return "Text File (*.txt)";
+                    return "(*.txt) & (*.js)";
                 }
             });
             int option = fileChooser.showDialog(MainFrame.this,"选择");
@@ -177,9 +180,8 @@ public class MainFrame extends JFrame{
                 if (!(source.getValueIsAdjusting())) {
                     BigDecimal percentage = new BigDecimal((float) source.getValue() / 100);
                     percentage = percentage.setScale(2, RoundingMode.HALF_UP);
-                    percentage.multiply(new BigDecimal(StaticUtil.musicPlayMaxIndex));
-                    StaticUtil.musicPlayIndex = percentage.intValue();
-                    System.out.println(percentage);
+                    percentage = percentage.multiply(new BigDecimal(StaticUtil.musicPlayMaxIndex));
+                    setMusicPlayIndex(percentage.intValue());
                 }
             }
         });
@@ -207,4 +209,9 @@ public class MainFrame extends JFrame{
         DefaultTableModel data = new DefaultTableModel(dataList, new String[]{"歌名"});
         table.setModel(data);
     }
+
+    public synchronized void setMusicPlayIndex(int index){
+        StaticUtil.musicPlayIndex = index;
+    }
+
 }

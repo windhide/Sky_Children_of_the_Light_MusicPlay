@@ -21,9 +21,11 @@ public class StaticUtil {
     public static Image iconImage;
     public static List<String> fileNameList;
     public static boolean isSystemPlay;
-
     public static int musicPlayIndex;
-
     public static int musicPlayMaxIndex;
+
+    public static int delay = 10;
+
+    public static boolean isRandom = false;
 
 }

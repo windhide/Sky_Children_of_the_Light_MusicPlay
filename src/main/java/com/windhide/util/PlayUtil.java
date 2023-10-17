@@ -6,10 +6,9 @@ import com.windhide.entity.Tap.KeyTap;
 import com.windhide.runnable.PlayBarRunnable;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.awt.event.KeyEvent;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 播放形式工具类
@@ -67,26 +66,14 @@ public class PlayUtil {
         StaticUtil.musicPlayMaxIndex = music.size();
         for (StaticUtil.musicPlayIndex = 0; StaticUtil.musicPlayIndex < music.size(); StaticUtil.musicPlayIndex++) {
             String s = music.get(StaticUtil.musicPlayIndex).getTap().toUpperCase();
-            if (s.length() > 1) {
-                for (int inString = 0; inString < s.length(); inString++) {
-                    robot.keyPress(s.charAt(inString));
-                    robot.keyRelease(s.charAt(inString));
-                }
-            } else {
-                robot.keyPress(s.charAt(0));
-                robot.keyRelease(s.charAt(0));
-            }
-            StaticUtil.nowPlayTime = music.get(StaticUtil.musicPlayIndex).getDelay();
-//            System.out.println("Press \t ->" + s);
+            playCore(robot, music, s);
             try {
                 long delay = music.get(StaticUtil.musicPlayIndex + 1).getDelay() - music.get(StaticUtil.musicPlayIndex).getDelay();
-                Thread.sleep(delay);
+                robot.delay((int) delay);
             } catch (Exception e) {
-                try {
                     Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+                    robot.delay(100);
+
             }
         }
         StaticUtil.playBarRunnable = null; // 线程归零;
@@ -143,31 +130,39 @@ public class PlayUtil {
         StaticUtil.playBarThread.start();
         StaticUtil.musicPlayMaxIndex = music.size();
         for (StaticUtil.musicPlayIndex = 0; StaticUtil.musicPlayIndex < music.size(); StaticUtil.musicPlayIndex++) {
-            String s = music.get(StaticUtil.musicPlayIndex).getTap().toUpperCase();
-            if (s.length() > 1) {
-                for (int inString = 0; inString < s.length(); inString++) {
-                    robot.keyPress(s.charAt(inString));
-                    robot.keyRelease(s.charAt(inString));
-                }
-            } else {
-                robot.keyPress(s.charAt(0));
-                robot.keyRelease(s.charAt(0));
-            }
-            StaticUtil.nowPlayTime = music.get(StaticUtil.musicPlayIndex).getDelay();
-//            System.out.println("Press \t ->" + s);
+            String s = music.get(StaticUtil.musicPlayIndex).getTap().toLowerCase(Locale.ROOT);
+            playCore(robot, music, s);
             try {
                 long delay = music.get(StaticUtil.musicPlayIndex + 1).getDelay() - music.get(StaticUtil.musicPlayIndex).getDelay();
-                Thread.sleep(delay);
+                robot.delay((int) delay);
             } catch (Exception e) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+                    robot.delay(100);
             }
         }
         StaticUtil.playBarThread.stop(); // 终止线程
         StaticUtil.playBarRunnable = null; // 线程归零;
         StaticUtil.nowPlayMusic = null; // 停止进度条
+    }
+
+    public static void playCore(Robot robot, List<Music> music, String s) {
+        s = s.toLowerCase();
+        if (s.length() > 1) {
+            for (int inString = 0; inString < s.length(); inString++) {
+                robot.keyPress(EventKeyUtil.EventKeyTransfor(s.charAt(inString)+""));
+                robot.delay(StaticUtil.isRandom?randomDelay():StaticUtil.delay);
+                robot.keyRelease(EventKeyUtil.EventKeyTransfor(s.charAt(inString)+""));
+            }
+        } else {
+            robot.keyPress(EventKeyUtil.EventKeyTransfor(s.charAt(0)+""));
+            robot.delay(StaticUtil.isRandom?randomDelay():StaticUtil.delay);
+            robot.keyRelease(EventKeyUtil.EventKeyTransfor(s.charAt(0)+""));
+        }
+        StaticUtil.nowPlayTime = music.get(StaticUtil.musicPlayIndex).getDelay();
+        System.out.println("Press \t ->" + s);
+    }
+
+    private static Integer randomDelay(){
+        Random random = new Random();
+        return random.nextInt(11)+10;
     }
 }

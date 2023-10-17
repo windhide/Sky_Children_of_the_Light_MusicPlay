@@ -1,5 +1,6 @@
 package com.windhide.frame;
 
+import com.windhide.entity.Tap.KeyTap;
 import com.windhide.util.StaticUtil;
 import com.windhide.util.TextMusicScoreUtil;
 
@@ -14,22 +15,22 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MainFrame extends JFrame{
 
     private JFrame frame;
     private JTextField searchTextField;
-    private JButton playButton, stopButton, editButton;
+    private JButton playButton, stopButton, editButton, computerButton;
     private JScrollPane scrollPane;
     private JTable table;
     private JButton changeTapKey;
-    public JSlider playBar;
+    public JSlider playBar,delayBar;
     public JLabel playBarMusicName, lblNewLabel;
+
+    public JRadioButton rb1,rb2;
 
     public MainFrame() {
         initialize();
@@ -154,6 +155,33 @@ public class MainFrame extends JFrame{
         });
         frame.getContentPane().add(editButton);
 
+
+        computerButton = new JButton("电脑按键");
+        computerButton.setFont(new Font("宋体", Font.PLAIN, 17));
+        computerButton.setBounds(420,360,150,50);
+        computerButton.addActionListener(e ->{
+            KeyTap keyTapUtil = new KeyTap();
+            keyTapUtil.Do = "y";
+            keyTapUtil.Re = "u";
+            keyTapUtil.Mi = "i";
+            keyTapUtil.Fa = "o";
+            keyTapUtil.So = "p";
+            keyTapUtil.La = "h";
+            keyTapUtil.Xi = "j";
+            keyTapUtil.H_Do = "k";
+            keyTapUtil.H_Re = "l";
+            keyTapUtil.H_Mi = ";";
+            keyTapUtil.H_Fa = "n";
+            keyTapUtil.H_So = "m";
+            keyTapUtil.H_La = ",";
+            keyTapUtil.H_Xi = ".";
+            keyTapUtil.HH_Do = "/";
+            StaticUtil.keyTap = keyTapUtil;
+            JOptionPane.showMessageDialog(null, "按键设置成功", "成功", JOptionPane.INFORMATION_MESSAGE);
+        });
+        frame.getContentPane().add(computerButton);
+
+
         changeTapKey = new JButton("改键位");
         changeTapKey.addActionListener(e -> new KeySetFrame());
         changeTapKey.setFont(new Font("宋体", Font.PLAIN, 17));
@@ -166,6 +194,42 @@ public class MainFrame extends JFrame{
                 reloadTable(table, searchTextField.getText());
             }
         });
+
+        delayBar = new JSlider(0,100,1);
+        delayBar.setValue(10);
+        delayBar.setBounds(420, 280, 215, 50);
+        delayBar.setMajorTickSpacing(10);
+        delayBar.setPaintTicks(true);
+        delayBar.setPaintLabels(true);
+        delayBar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                JSlider source = (JSlider) e.getSource();
+                StaticUtil.delay = source.getValue();
+                rb1.doClick();
+            }
+        });
+        frame.getContentPane().add(delayBar);
+
+
+        rb1=new JRadioButton("自定义延时");
+        rb2=new JRadioButton("随机延时");
+        rb1.setBounds(420, 330, 100, 30);
+        rb2.setBounds(520, 330, 80, 30);
+        ButtonGroup gp=new ButtonGroup();
+        gp.add(rb1);
+        gp.add(rb2);
+        frame.getContentPane().add(rb1);
+        frame.getContentPane().add(rb2);
+        rb1.addActionListener(e->{
+            StaticUtil.delay = delayBar.getValue();
+            StaticUtil.isRandom = false;
+        });
+        rb2.addActionListener(e->{
+            StaticUtil.isRandom = true;
+        });
+
+
 
         playBar = new JSlider(0,100,1);
         playBar.setValue(0);
@@ -192,6 +256,7 @@ public class MainFrame extends JFrame{
         playBarMusicName.setBounds(420, 134, 218, 25);
         frame.getContentPane().add(playBarMusicName);
         frame.setVisible(true);
+        rb1.doClick();
     }
 
     public void reloadTable(JTable table, String searchSongName) {

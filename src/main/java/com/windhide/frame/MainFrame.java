@@ -27,10 +27,10 @@ public class MainFrame extends JFrame{
     private JScrollPane scrollPane;
     private JTable table;
     private JButton changeTapKey;
-    public JSlider playBar,delayBar;
+    public JSlider playBar,delayBar,extBar;
     public JLabel playBarMusicName, lblNewLabel;
 
-    public JRadioButton rb1,rb2;
+    public JRadioButton rb1,rb2,extRb1,extRb2;
 
     public MainFrame() {
         initialize();
@@ -71,7 +71,7 @@ public class MainFrame extends JFrame{
 
         playButton = new JButton("播放");
         playButton.setFont(new Font("宋体", Font.PLAIN, 17));
-        playButton.setBounds(420, 14, 218, 50);
+        playButton.setBounds(420, 14, 100, 50);
         playButton.addActionListener(e -> {
             try {
                 String musicName = table.getValueAt(table.getSelectedRow(), 0) + ".txt";
@@ -96,7 +96,7 @@ public class MainFrame extends JFrame{
 
         stopButton = new JButton("停止");
         stopButton.setFont(new Font("宋体", Font.PLAIN, 17));
-        stopButton.setBounds(420, 74, 218, 50);
+        stopButton.setBounds(530, 14, 100, 50);
         frame.getContentPane().add(stopButton);
         stopButton.addActionListener(e -> {
             try {
@@ -115,7 +115,7 @@ public class MainFrame extends JFrame{
 
         editButton = new JButton("选择外部文件播放");
         editButton.setFont(new Font("宋体", Font.PLAIN, 17));
-        editButton.setBounds(420,220,218,50);
+        editButton.setBounds(420,70,210,50);
         editButton.addActionListener(e ->{
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileFilter(new FileFilter() {
@@ -156,9 +156,9 @@ public class MainFrame extends JFrame{
         frame.getContentPane().add(editButton);
 
 
-        computerButton = new JButton("电脑按键");
+        computerButton = new JButton("电脑键");
         computerButton.setFont(new Font("宋体", Font.PLAIN, 17));
-        computerButton.setBounds(420,360,150,50);
+        computerButton.setBounds(530, 413,100,50);
         computerButton.addActionListener(e ->{
             KeyTap keyTapUtil = new KeyTap();
             keyTapUtil.Do = "y";
@@ -185,7 +185,7 @@ public class MainFrame extends JFrame{
         changeTapKey = new JButton("改键位");
         changeTapKey.addActionListener(e -> new KeySetFrame());
         changeTapKey.setFont(new Font("宋体", Font.PLAIN, 17));
-        changeTapKey.setBounds(420, 413, 218, 50);
+        changeTapKey.setBounds(420, 413, 100, 50);
         frame.getContentPane().add(changeTapKey);
 
         searchTextField.addKeyListener(new KeyAdapter() {
@@ -197,7 +197,7 @@ public class MainFrame extends JFrame{
 
         delayBar = new JSlider(0,100,1);
         delayBar.setValue(10);
-        delayBar.setBounds(420, 280, 215, 50);
+        delayBar.setBounds(420, 220, 215, 50);
         delayBar.setMajorTickSpacing(10);
         delayBar.setPaintTicks(true);
         delayBar.setPaintLabels(true);
@@ -214,8 +214,8 @@ public class MainFrame extends JFrame{
 
         rb1=new JRadioButton("自定义延时");
         rb2=new JRadioButton("随机延时");
-        rb1.setBounds(420, 330, 100, 30);
-        rb2.setBounds(520, 330, 80, 30);
+        rb1.setBounds(420, 270, 100, 30);
+        rb2.setBounds(565, 270, 80, 30);
         ButtonGroup gp=new ButtonGroup();
         gp.add(rb1);
         gp.add(rb2);
@@ -229,6 +229,39 @@ public class MainFrame extends JFrame{
             StaticUtil.isRandom = true;
         });
 
+
+//        extBar = new JSlider(0,100,1);
+//        extBar.setValue(10);
+//        extBar.setBounds(420, 320, 215, 50);
+//        extBar.setMajorTickSpacing(10);
+//        extBar.setPaintTicks(true);
+//        extBar.setPaintLabels(true);
+//        extBar.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseReleased(MouseEvent e) {
+//                JSlider source = (JSlider) e.getSource();
+//                StaticUtil.delay = source.getValue();
+//                rb1.doClick();
+//            }
+//        });
+//        frame.getContentPane().add(extBar);
+//
+//        extRb1=new JRadioButton("自定义长按");
+//        extRb2=new JRadioButton("随机长按");
+//        extRb1.setBounds(420, 370, 100, 30);
+//        extRb2.setBounds(565, 370, 80, 30);
+//        ButtonGroup extGp = new ButtonGroup();
+//        extGp.add(extRb1);
+//        extGp.add(extRb2);
+//        frame.getContentPane().add(extRb1);
+//        frame.getContentPane().add(extRb2);
+//        extRb1.addActionListener(e->{
+//            StaticUtil.delay = delayBar.getValue();
+//            StaticUtil.extIsRandom = false;
+//        });
+//        extRb2.addActionListener(e->{
+//            StaticUtil.extIsRandom = true;
+//        });
 
 
         playBar = new JSlider(0,100,1);

@@ -27,5 +27,6 @@ public class StaticUtil {
     public static int delay = 10;
 
     public static boolean isRandom = false;
+    public static boolean extIsRandom = false;
 
 }
